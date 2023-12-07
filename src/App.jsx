@@ -1,11 +1,20 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./Layout"
+import './App.css'
+import Homepage from "./Homepage";
 
 function App() {
   return (
-    <div className="App">
-      <h1>test</h1>
+    <BrowserRouter style={{ background: "#faf6f3" }}>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Homepage />}></Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
 
 
-    </div>
+
   );
 }
 
