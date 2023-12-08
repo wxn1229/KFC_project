@@ -1,26 +1,25 @@
-
-.navbar {
-    background-color: white;
-    color: #2D2926;
+.subbar {
+    background-color: black;
+    color: white;
     height: 60px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
 }
 
-.navList {
+.subList {
     list-style: none;
     display: flex;
     margin: 0;
     padding: 0;
 }
 
-.navItem {
+.subItem {
     margin: 0 10px;
 }
 
-.navLink {
-    color: #2D2926;
+.subLink {
+    color: white;
     text-decoration: none;
 }
 

@@ -1,0 +1,15 @@
+.products{
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+
+}
+
+.Indivdual h1{
+  margin-left: 30px;
+
+}
+.Indivdual img{
+  width: 300px;
+}
