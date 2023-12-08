@@ -1,0 +1,47 @@
+
+
+.foodMenu {
+  background: #fff; /* Or any other preferred background color */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Add a subtle shadow */
+}
+
+.menuHeader {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.menuItems {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.menuItem {
+  border: 1px solid #ddd; /* A light border */
+  border-radius: 8px;
+  overflow: hidden;
+  width: calc(33.333% - 20px); /* Three items per row with gap */
+}
+
+.menuItem img {
+  width: 100%;
+  height: auto; /* Maintain aspect ratio */
+}
+
+.menuItemDetails {
+  padding: 10px;
+  text-align: center;
+}
+
+.menuItemDetails h3 {
+  margin-top: 0;
+  color: #333; /* Dark text color for contrast */
+}
+
+.menuItemDetails p {
+  margin: 5px 0;
+}
+

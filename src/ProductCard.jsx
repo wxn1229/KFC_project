@@ -1,6 +1,7 @@
 
 import React from 'react';
 import './ProductCard.css'; // 引入CSS样式文件
+import { Link } from 'react-router-dom';
 
 const ProductCard = ({ title, items, price }) => {
   return (
@@ -17,7 +18,7 @@ const ProductCard = ({ title, items, price }) => {
           ))}
         </ul>
         <div className="product-price">{price}</div>
-        <button className="btn-order">訂購</button>
+        <button className="btn-order"><Link to="../MenuComponent">訂購</Link></button>
       </div>
     </div>
   );

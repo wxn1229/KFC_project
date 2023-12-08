@@ -1,0 +1,33 @@
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  
+}
+
+.menu-item-content {
+  flex-grow: 1;
+}
+
+.menu-item-header {
+  font-weight: bold;
+}
+
+.menu-item-name {
+  /* styles for the name */
+}
+
+.menu-item-number {
+  /* styles for the number */
+}
+
+.change-button {
+  /* styles for the change button */
+}
+
+.menu-item-image {
+  width: 100px; /* adjust as needed */
+  height: auto;
+}
