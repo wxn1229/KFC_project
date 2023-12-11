@@ -1,0 +1,17 @@
+.Menuright img{
+  width: 487px;
+  height: 568px;
+
+  
+}
+
+
+.Menuright .total{
+  display:flex;
+  justify-content: space-between;
+}
+
+
+.Menuright .price{
+  font-size: 20px;
+}

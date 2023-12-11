@@ -21,7 +21,7 @@ const MenuItem = ({ title, name, number, isCanChange, image }) => {
 // The Menu component that would render all the menu items
 const Menuleft = ({ menuItems }) => {
   return (
-    <div className="menu">
+    <div className="Menuleft">
       {menuItems.map((item, index) => (
         <MenuItem
           key={index}

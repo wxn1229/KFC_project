@@ -7,19 +7,41 @@
     justify-content: flex-start;
 }
 
+.subItem:hover{
+  background-color: #e4002b;
+}
+
 .subList {
     list-style: none;
     display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 0;
     padding: 0;
+    height: 100%;
 }
 
 .subItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    height: 100%;
+  
     margin: 0 10px;
 }
 
 .subLink {
     color: white;
     text-decoration: none;
+    text-align: center;
+
+    /* 新增的樣式 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;  /* 新增寬度為 100% */
+    height: 100%; /* 確保高度為 100% */
+    padding: 0 5px;
 }
 

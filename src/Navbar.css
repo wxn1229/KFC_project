@@ -24,3 +24,25 @@
     text-decoration: none;
 }
 
+/* 當鼠標懸停在連結上時改變文字顏色 */
+.navLink:hover {
+  color: #e4002b; /* 請改為您喜歡的顏色 */
+}
+
+/* 為連結添加背景色 */
+.navLink:hover {
+  background-color: rgba(228, 0, 43, 0.1); /* 輕微的背景色，可調整 */
+  padding: 5px 10px; /* 添加一些內邊距 */
+  border-radius: 5px; /* 添加圓角 */
+}
+
+/* 在懸停時添加底線 */
+.navLink:hover {
+  text-decoration: underline;
+}
+
+/* 輕微放大文字 */
+.navLink:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s; /* 平滑的過渡效果 */
+}

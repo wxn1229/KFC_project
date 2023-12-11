@@ -18,3 +18,26 @@
 .Head{
   background-color: #faf6f3;
 }
+
+/* 當鼠標懸停在連結上時改變顏色 */
+.logoLink:hover, .loginLink:hover {
+  color: #e4002b; /* 改為您喜歡的顏色 */
+}
+
+/* 為連結添加淺色背景 */
+.logoLink:hover, .loginLink:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* 輕微的背景色 */
+  border-radius: 5px; /* 圓角邊框（可選） */
+}
+
+/* 輕微放大連結或圖像 */
+.logoLink:hover img, .loginLink:hover img {
+  transform: scale(1.1); /* 輕微放大 */
+  transition: transform 0.3s; /* 平滑過渡效果 */
+}
+
+/* 添加底線 */
+.logoLink:hover, .loginLink:hover {
+  text-decoration: underline; /* 底線 */
+  text-decoration-color: #e4002b; /* 底線顏色 */
+}

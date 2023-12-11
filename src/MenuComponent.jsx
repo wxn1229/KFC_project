@@ -3,6 +3,7 @@
 import React from 'react';
 import './MenuComponent.css'; // Assuming you have a CSS file for styling
 import Menuleft from './Menuleft';
+import Menuright from './Menuright';
 
 // MenuItem component for individual items
 // FoodMenu component for the whole menu
@@ -27,6 +28,8 @@ const MenuComponent = () => {
       </div>
       <div className="menuItems">
         <Menuleft menuItems={menuItems} />
+        <Menuright combo={combo} />
+
       </div>
       {/* You can add more sections or components here as needed */}
     </div>

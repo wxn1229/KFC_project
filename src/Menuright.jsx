@@ -20,20 +20,30 @@ const MenuItem = ({ title, name, number, isCanChange, image }) => {
 };
 
 // The Menu component that would render all the menu items
-const Menuright = ({ menuItems }) => {
+const Menuright = ({ combo }) => {
   return (
-    <div className="menu">
+    <div className="Menuright">
+      <img src={combo.imagePath} alt="image" />
+      <h2>{combo.name}</h2>
+      <p>chicken x2</p>
+      <p>chicken x2</p>
+      <p>chicken x2</p>
+      <p>chicken x2</p>
 
-      {menuItems.map((item, index) => (
-        <MenuItem
-          key={index}
-          title={item.title}
-          name={item.name}
-          number={item.number}
-          isCanChange={item.isCanChange}
-          image={item.image}
-        />
-      ))}
+      <hr />
+
+      <div className="total">
+        <div>
+          餐點小記
+        </div>
+        <div className="price">
+          $ {combo.price}
+        </div>
+      </div>
+
+
+
+
     </div>
   );
 };
