@@ -6,6 +6,7 @@ import Indivdaul from "./Indivdual";
 import MenuComponent from "./MenuComponent";
 import Share from "./Share";
 import Alacert from "./Alacert";
+import Login from "./Login";
 import { useState } from "react";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           </Route>
           <Route path="share" element={< Share />}></Route>
           <Route path="alacert" element={<Alacert />} ></Route>
+          <Route path="login" element={<Login />}></Route>
 
           <Route path="MenuComponent" element={<MenuComponent />}></Route>
         </Route>
