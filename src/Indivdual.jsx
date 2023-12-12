@@ -57,6 +57,7 @@ const Indivdaul = () => {
                 items={product.items}
                 price={product.price}
                 imgpath={product.imgpath}
+                _id={product._id}
               />
             ))}
           </div>

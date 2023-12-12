@@ -1,8 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
 import './Login.css'; // 確保您已經創建了Login.css檔案
-
-// 生成隨機數字驗證碼的函數
 function generateCaptcha() {
   let captcha = "";
   for (let i = 0; i < 6; i++) {
@@ -11,12 +8,17 @@ function generateCaptcha() {
   return captcha;
 }
 
-const Login = () => {
+
+const Forget = () => {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [captcha, setCaptcha] = useState('');
   const [inputCaptcha, setInputCaptcha] = useState('');
+  const [phone, setPhone] = useState('')
+  const [checkpassword, setCheckpassword] = useState('')
+  const [checkemail, setCheckemail] = useState('')
 
   useEffect(() => {
     setCaptcha(generateCaptcha()); // 在組件加載時生成新的驗證碼
@@ -40,25 +42,28 @@ const Login = () => {
 
   return (
     <div className="login-container">
+      <h1>忘記密碼</h1>
       <form onSubmit={handleSubmit} className="login-form">
         <div className="form-group">
-          <label htmlFor="username">用戶名/Email</label>
+          <label htmlFor="phone">電話號碼</label>
           <input
-            id="username"
+            id="phone"
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">密碼</label>
+
+          <label htmlFor="email">Email</label>
           <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            id="email"
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
+
         <div className="form-group captchadiv">
           <label htmlFor="captcha">驗證碼</label>
           <div onClick={refreshCaptcha} style={{ cursor: 'pointer', background: '#eee', padding: '10px', textAlign: 'center', marginBottom: '10px' }}>
@@ -73,12 +78,12 @@ const Login = () => {
           />
         </div>
         <div className="form-group">
-          <button type="submit" className="submit-button">登入</button>
+          <button type="submit" className="submit-button">送出</button>
         </div>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Forget;
 

@@ -1,0 +1,16 @@
+.Account{
+  display: flex;
+  justify-content: center;
+}
+
+
+.Account .left{
+  margin-right: 30px;
+
+}
+
+
+.Account .right{
+  margin-left: 30px;
+}
+

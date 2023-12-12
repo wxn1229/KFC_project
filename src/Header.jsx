@@ -10,7 +10,7 @@ const Header = () => {
   const location = useLocation(); // 获取当前路由信息
 
   // 检查当前的路径名是否为根路径
-  const showSubbar = location.pathname === "/" || location.pathname === "/login";
+  const showSubbar = location.pathname === "/" || location.pathname.includes("/account");
 
   return (
     <div className="Header">

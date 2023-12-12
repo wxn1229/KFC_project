@@ -1,6 +1,6 @@
 
 .login-container {
-  max-width: 300px;
+  width: 500px;
   margin: 50px auto;
   padding: 20px;
   background-color: #fff;
@@ -24,6 +24,10 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+.captchadiv{
+  width: 100px;
 }
 
 .login-form .form-group.checkbox {

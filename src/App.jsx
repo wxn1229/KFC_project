@@ -7,6 +7,9 @@ import MenuComponent from "./MenuComponent";
 import Share from "./Share";
 import Alacert from "./Alacert";
 import Login from "./Login";
+import Account from "./Account";
+import Register from "./Register";
+import Forget from "./Forget";
 import { useState } from "react";
 
 function App() {
@@ -18,15 +21,17 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Homepage />}></Route>
-          <Route path="indivdual" element={<Indivdaul />}>
-
-
-          </Route>
+          <Route path="indivdual" element={<Indivdaul />}></Route>
           <Route path="share" element={< Share />}></Route>
           <Route path="alacert" element={<Alacert />} ></Route>
-          <Route path="login" element={<Login />}></Route>
 
-          <Route path="MenuComponent" element={<MenuComponent />}></Route>
+          <Route path="account" element={< Account />}>
+            <Route path="login" element={< Login />}></Route>
+            <Route path="register" element={<Register />}></Route>
+            <Route path="forget" element={<Forget />}></Route>
+          </Route>
+
+          <Route path="menu/combo/:id" element={<MenuComponent />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

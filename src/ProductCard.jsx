@@ -3,7 +3,7 @@ import React from 'react';
 import './ProductCard.css'; // 引入CSS样式文件
 import { Link } from 'react-router-dom';
 
-const ProductCard = ({ title, items, price, imgpath }) => {
+const ProductCard = ({ title, items, price, imgpath, _id }) => {
   return (
     <div className="product-card">
       <div className="product-image">
@@ -18,7 +18,7 @@ const ProductCard = ({ title, items, price, imgpath }) => {
           ))}
         </ul>
         <div className="product-price">${price}</div>
-        <button className="btn-order"><Link to="../MenuComponent">訂購</Link></button>
+        <button className="btn-order"><Link to={"../menu/combo/" + _id}>訂購</Link></button>
       </div>
     </div>
   );

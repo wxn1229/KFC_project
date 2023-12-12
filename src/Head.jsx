@@ -19,7 +19,7 @@ const Head = () => {
 
           <img src="./img/Head/logo.png" alt="logo" className="logo" style={{ width: "66px" }} />
         </Link>
-        <Link className="loginLink" to="./login">
+        <Link className="loginLink" to="./account/login">
           <img src="./img/Head/login.png" alt="login" className="login" />
         </Link>
 

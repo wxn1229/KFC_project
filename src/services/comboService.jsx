@@ -7,6 +7,11 @@ class comboService {
   getcombobyTitle(title) {
     return axios.get(API_URL + "/findbytitle/" + title);
   }
+  getcombobyID(id) {
+    return axios.get(API_URL + "/findbyid/" + id)
+  }
+
+
 }
 
 

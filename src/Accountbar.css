@@ -1,0 +1,29 @@
+
+.vertical-navbar {
+  height:500px;
+
+  width: 200px; /* 導航欄寬度 */
+  padding: 20px; /* 內部間距 */
+}
+
+.vertical-navbar ul {
+  list-style-type: none; /* 移除列表項目的標記 */
+  padding: 0;
+}
+
+.vertical-navbar li {
+  padding: 8px;
+  margin-bottom: 7px;
+  color: #000;
+  text-align: center;
+}
+
+.vertical-navbar .accountlink:hover {
+  color: red;
+}
+
+.vertical-navbar .accountlink {
+  color: #2D2926;
+  text-decoration: none;
+
+}
