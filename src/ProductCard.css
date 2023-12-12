@@ -1,4 +1,5 @@
 
+
 .product-card {
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -6,7 +7,13 @@
   margin: 16px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   overflow: hidden;
+  transition: box-shadow 0.3s ease-in-out; /* 添加过渡效果 */
 }
+
+.product-card:hover {
+  box-shadow: 0 16px 32px rgba(0,0,0,0.2); /* 悬停时增加阴影大小 */
+}
+
 
 .product-image {
   width: 100%;

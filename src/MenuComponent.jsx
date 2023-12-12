@@ -19,35 +19,62 @@ const MenuComponent = () => {
 
   const [comboData, setCombo] = useState({});
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+    });
+
     const fetchData = async () => {
       let newData = [];
       let getData = await ComboService.getcombobyID(id);
-      console.log(getData.data.foundcombo);
+      let foundCombo = getData.data.foundcombo
+      console.log({ msg: "this is found combo", foundCombo });
+
+
+
       let isFirst = true;
       for (const item of getData.data.foundcombo.items) {
         let itemData = await ItemService.getItembyID(item.item)
-        item.itemName = itemData.data.foundItem.itemname;
-        console.log({ msg: "this is a item", item })
+        let foundItem = itemData.data.foundItem
+
+        console.log({ msg: "this is a foundItem", foundItem })
         if (isFirst) {
 
           newData = [...newData, {
             title: "主餐",
-            name: item.itemName,
+            name: foundItem.itemname,
             number: item.itemnumber,
-            isCange: item.canChange,
-            image: item.imgpath_inside,
+            isCanChange: foundItem.canChange,
+            image: foundItem.imgpath,
 
           }]
+          isFirst = false
         }
         else {
 
-          newData = [...newData, {}]
+          newData = [...newData, {
+            title: foundItem.title,
+            name: foundItem.itemname,
+            number: item.itemnumber,
+            isCanChange: foundItem.canChange,
+            image: foundItem.imgpath,
+
+
+          }]
         }
 
         setItemsData(newData);
         console.log(newData);
 
+
+        console.log({ msg: "itmes data", itemsData })
+
       }
+
+      setCombo(getData.data.foundcombo)
+
+      console.log({ msg: "combo data", comboData })
+
     }
 
     fetchData();
@@ -73,8 +100,8 @@ const MenuComponent = () => {
         {/* You can add more header details here */}
       </div>
       <div className="menuItems">
-        <Menuleft menuItems={menuItems} />
-        <Menuright combo={combo} />
+        <Menuleft menuItems={itemsData} />
+        <Menuright menuItems={itemsData} combo={comboData} />
 
       </div>
       {/* You can add more sections or components here as needed */}

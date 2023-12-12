@@ -13,6 +13,7 @@ const Share = () => {
 
 
   useEffect(() => {
+
     const fetchData = async () => {
       let newData = {};
 
@@ -57,6 +58,7 @@ const Share = () => {
                 items={product.items}
                 price={product.price}
                 imgpath={product.imgpath}
+                _id={product._id}
               />
             ))}
           </div>

@@ -7,7 +7,7 @@ const MenuItem = ({ title, name, number, isCanChange, image }) => {
   return (
     <div className="menu-item">
 
-      <img src={image} alt={name} className="menu-item-image" />
+      <img src={"/img/food/" + image} alt={name} className="menu-item-image" />
       <div className="menu-item-content">
         <div className="menu-item-header">{title}</div>
         <div className="menu-item-name">{name}</div>
