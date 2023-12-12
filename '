@@ -1,11 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import './Login.css'; // 確保您已經創建了Login.css檔案
-import { useNavigate } from 'react-router-dom';
-
 import authService from './services/authService';
-
-// 生成隨機數字驗證碼的函數
 function generateCaptcha() {
   let captcha = "";
   for (let i = 0; i < 6; i++) {
@@ -14,14 +9,18 @@ function generateCaptcha() {
   return captcha;
 }
 
-const Login = () => {
-  const navigate = useNavigate()
+
+const Register = () => {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [captcha, setCaptcha] = useState('');
   const [inputCaptcha, setInputCaptcha] = useState('');
-  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [checkpassword, setCheckpassword] = useState('')
+  const [checkemail, setCheckemail] = useState('')
+  const [birthday, setBirthday] = useState('')
 
   useEffect(() => {
     setCaptcha(generateCaptcha()); // 在組件加載時生成新的驗證碼
@@ -34,19 +33,11 @@ const Login = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     if (inputCaptcha === captcha) {
+      console.log({ phone, username, email, password, birthday });
+      let registerUser = await authService.register(phone, username, email, password, birthday)
+      console.log(registerUser.data)
 
-      try {
-        let loginUser = await authService.login(email, password)
-        console.log(loginUser.data)
-        localStorage.setItem("user", JSON.stringify(loginUser.data))
-        alert(loginUser.data.msg)
 
-        navigate("/")
-
-      } catch (e) {
-        alert(e.response.data)
-
-      }
       // 在這裡添加登入邏輯
     } else {
       alert("驗證碼錯誤");
@@ -55,16 +46,22 @@ const Login = () => {
     }
   };
 
-
-
-
-
-
   return (
     <div className="login-container">
+      <h1>加入會員</h1>
       <form className="login-form">
+        <div classname="form-group">
+          <label htmlfor="phone">電話號碼</label>
+          <input
+            id="phone"
+            type="text"
+            value={phone}
+            onchange={(e) => setPhone(e.target.value)}
+          />
+        </div>
         <div className="form-group">
-          <label htmlFor="email">用戶名/Email</label>
+
+          <label htmlFor="email">Email</label>
           <input
             id="email"
             type="text"
@@ -81,6 +78,38 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+        <div className="form-group">
+          <label htmlFor="checkpassword">確認密碼</label>
+          <input
+            id="checkpassword"
+            type="password"
+            value={checkpassword}
+            onChange={(e) => setCheckpassword(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="birthday">生日</label>
+          <input
+            id="birthday"
+            type="date"
+            value={birthday}
+            onChange={(e) => setBirthday(e.target.value)}
+          />
+        </div>
+
+
+        <div className="form-group">
+          <label htmlFor="checkemail">email 驗證碼</label>
+          <input
+            id="checkemail"
+            type="text"
+            value={checkemail}
+            onChange={(e) => setCheckemail(e.target.value)}
+            placeholder="輸入email驗證碼"
+          />
+        </div>
+
+
         <div className="form-group captchadiv">
           <label htmlFor="captcha">驗證碼</label>
           <div onClick={refreshCaptcha} style={{ cursor: 'pointer', background: '#eee', padding: '10px', textAlign: 'center', marginBottom: '10px' }}>
@@ -95,12 +124,12 @@ const Login = () => {
           />
         </div>
         <div className="form-group">
-          <button onClick={submitHandler} className="submit-button">登入</button>
+          <button onClick={submitHandler} type="submit" className="submit-button">註冊</button>
         </div>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Register;
 

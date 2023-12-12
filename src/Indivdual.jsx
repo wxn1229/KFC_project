@@ -12,7 +12,9 @@ const Indivdaul = () => {
   const [productsData, setproductsData] = useState([]);
 
 
+
   useEffect(() => {
+
     const fetchData = async () => {
       let newData = {};
 

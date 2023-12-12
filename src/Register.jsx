@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Login.css'; // 確保您已經創建了Login.css檔案
+import authService from './services/authService';
+import { useNavigate } from 'react-router-dom';
 function generateCaptcha() {
   let captcha = "";
   for (let i = 0; i < 6; i++) {
@@ -10,15 +12,16 @@ function generateCaptcha() {
 
 
 const Register = () => {
+  const navigate = useNavigate()
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
   const [captcha, setCaptcha] = useState('');
   const [inputCaptcha, setInputCaptcha] = useState('');
   const [phone, setPhone] = useState('')
   const [checkpassword, setCheckpassword] = useState('')
   const [checkemail, setCheckemail] = useState('')
+  const [birthday, setBirthday] = useState('')
 
   useEffect(() => {
     setCaptcha(generateCaptcha()); // 在組件加載時生成新的驗證碼
@@ -28,10 +31,28 @@ const Register = () => {
     setCaptcha(generateCaptcha()); // 生成新的驗證碼
   };
 
-  const handleSubmit = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
     if (inputCaptcha === captcha) {
-      console.log({ username, password, rememberMe });
+      if (password === checkpassword) {
+        console.log({ phone, username, email, password, birthday });
+        try {
+          let registerUser = await authService.register(phone, username, email, password, birthday)
+          console.log(registerUser.data)
+          alert(registerUser.data.msg)
+          navigate("/account/login")
+
+
+        } catch (e) {
+          alert(e.response.data)
+
+        }
+
+      }
+      else {
+        alert("確認密碼與密碼不一樣")
+      }
+
       // 在這裡添加登入邏輯
     } else {
       alert("驗證碼錯誤");
@@ -43,16 +64,19 @@ const Register = () => {
   return (
     <div className="login-container">
       <h1>加入會員</h1>
-      <form onSubmit={handleSubmit} className="login-form">
+      <form className="login-form">
+
         <div className="form-group">
-          <label htmlFor="phone">電話號碼</label>
+          <label htmlfor="phone">電話號碼</label>
           <input
             id="phone"
             type="text"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+
           />
         </div>
+
         <div className="form-group">
 
           <label htmlFor="email">Email</label>
@@ -73,7 +97,7 @@ const Register = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="checkpassword">密碼</label>
+          <label htmlFor="checkpassword">確認密碼</label>
           <input
             id="checkpassword"
             type="password"
@@ -81,6 +105,27 @@ const Register = () => {
             onChange={(e) => setCheckpassword(e.target.value)}
           />
         </div>
+        <div className="form-group">
+          <label htmlFor="username">名字</label>
+          <input
+            id="username"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+
+
+        <div className="form-group">
+          <label htmlFor="birthday">生日</label>
+          <input
+            id="birthday"
+            type="date"
+            value={birthday}
+            onChange={(e) => setBirthday(e.target.value)}
+          />
+        </div>
+
 
         <div className="form-group">
           <label htmlFor="checkemail">email 驗證碼</label>
@@ -108,7 +153,7 @@ const Register = () => {
           />
         </div>
         <div className="form-group">
-          <button type="submit" className="submit-button">註冊</button>
+          <button onClick={submitHandler} className="submit-button">註冊</button>
         </div>
       </form>
     </div>
