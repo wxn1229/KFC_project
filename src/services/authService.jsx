@@ -20,8 +20,14 @@ class authService {
     return JSON.parse(localStorage.getItem("user"))
   }
 
+  sendVerificationcode(email) {
+    return axios.post(API_URL + "/sendverificationcode", {
+      email
+    })
+  }
+
 }
 
 
 
-export default new authService
+export default new authService()

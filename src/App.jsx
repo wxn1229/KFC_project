@@ -11,9 +11,10 @@ import Account from "./Account";
 import Register from "./Register";
 import Forget from "./Forget";
 import { useState } from "react";
+import authService from "./services/authService";
 
 function App() {
-  const [adress, setAdress] = useState("");
+  const [curUser, setCurUser] = useState(authService.getCurUser())
 
 
   return (
@@ -25,8 +26,8 @@ function App() {
           <Route path="share" element={< Share />}></Route>
           <Route path="alacert" element={<Alacert />} ></Route>
 
-          <Route path="account" element={< Account />}>
-            <Route path="login" element={< Login />}></Route>
+          <Route path="account" element={< Account curUser={curUser} setCurUser={setCurUser} />}>
+            <Route path="login" element={< Login curUser={curUser} setCurUser={setCurUser} />}></Route>
             <Route path="register" element={<Register />}></Route>
             <Route path="forget" element={<Forget />}></Route>
           </Route>

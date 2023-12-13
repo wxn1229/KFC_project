@@ -3,14 +3,14 @@ import Accountbar from "./Accountbar";
 import "./Account.css"
 
 
-const Account = () => {
+const Account = ({ curUser, setCurUser }) => {
   return (
     <div className="Account">
       <div className="left">
         <Outlet />
       </div>
       <div className="right">
-        <Accountbar />
+        <Accountbar curUser={curUser} setCurUser={setCurUser} />
       </div>
 
     </div>

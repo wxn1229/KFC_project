@@ -17,6 +17,7 @@ const MenuComponent = () => {
   let { id } = useParams();
   const [itemsData, setItemsData] = useState([]);
 
+  const [count, setCount] = useState(5)
   const [comboData, setCombo] = useState({});
   useEffect(() => {
     window.scrollTo({
@@ -46,6 +47,7 @@ const MenuComponent = () => {
             number: item.itemnumber,
             isCanChange: foundItem.canChange,
             image: foundItem.imgpath,
+            group: foundItem.group
 
           }]
           isFirst = false
@@ -58,6 +60,7 @@ const MenuComponent = () => {
             number: item.itemnumber,
             isCanChange: foundItem.canChange,
             image: foundItem.imgpath,
+            group: foundItem.group
 
 
           }]
@@ -100,8 +103,8 @@ const MenuComponent = () => {
         {/* You can add more header details here */}
       </div>
       <div className="menuItems">
-        <Menuleft menuItems={itemsData} />
-        <Menuright menuItems={itemsData} combo={comboData} />
+        <Menuleft count={count} setCount={setCount} menuItems={itemsData} />
+        <Menuright count={count} setCount={setCount} menuItems={itemsData} combo={comboData} />
 
       </div>
       {/* You can add more sections or components here as needed */}

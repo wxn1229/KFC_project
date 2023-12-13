@@ -11,6 +11,10 @@ class ItemService {
   getItembyID(id) {
     return axios.get(API_URL + "/findbyid/" + id)
   }
+
+  getItembyGroup(group) {
+    return axios.get(API_URL + "/findbygroup/" + group)
+  }
 }
 
 

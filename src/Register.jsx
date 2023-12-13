@@ -22,6 +22,7 @@ const Register = () => {
   const [checkpassword, setCheckpassword] = useState('')
   const [checkemail, setCheckemail] = useState('')
   const [birthday, setBirthday] = useState('')
+  const [verificationCode, setVerificationCode] = useState('')
 
   useEffect(() => {
     setCaptcha(generateCaptcha()); // 在組件加載時生成新的驗證碼
@@ -31,22 +32,43 @@ const Register = () => {
     setCaptcha(generateCaptcha()); // 生成新的驗證碼
   };
 
+  const getcodeHandler = async (event) => {
+    event.preventDefault();
+    try {
+      let getInfo = await authService.sendVerificationcode(email)
+      console.log(getInfo.data)
+      setVerificationCode(getInfo.data.code)
+      alert("已寄出驗證郵件到 " + email)
+    } catch (e) {
+      console.log(e)
+
+    }
+
+
+  }
+
   const submitHandler = async (event) => {
     event.preventDefault();
     if (inputCaptcha === captcha) {
+
       if (password === checkpassword) {
-        console.log({ phone, username, email, password, birthday });
-        try {
-          let registerUser = await authService.register(phone, username, email, password, birthday)
-          console.log(registerUser.data)
-          alert(registerUser.data.msg)
-          navigate("/account/login")
+        if (verificationCode === checkemail) {
+          console.log({ phone, username, email, password, birthday });
+          try {
+            let registerUser = await authService.register(phone, username, email, password, birthday)
+            console.log(registerUser.data)
+            alert(registerUser.data.msg)
+            navigate("/account/login")
 
 
-        } catch (e) {
-          alert(e.response.data)
-
+          } catch (e) {
+            alert(e.response.data)
+          }
         }
+        else {
+          alert("信箱驗證碼錯誤")
+        }
+
 
       }
       else {
@@ -86,6 +108,7 @@ const Register = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+
         </div>
         <div className="form-group">
           <label htmlFor="password">密碼</label>
@@ -136,6 +159,9 @@ const Register = () => {
             onChange={(e) => setCheckemail(e.target.value)}
             placeholder="輸入email驗證碼"
           />
+        </div>
+        <div className="form-group">
+          <button onClick={getcodeHandler} className="submit-button">獲取驗證碼</button>
         </div>
 
 
