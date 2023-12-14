@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Login.css'; // 確保您已經創建了Login.css檔案
+import authService from './services/authService';
+import { useNavigate } from 'react-router-dom';
 function generateCaptcha() {
   let captcha = "";
   for (let i = 0; i < 6; i++) {
@@ -10,6 +12,7 @@ function generateCaptcha() {
 
 
 const Forget = () => {
+  const navigate = useNavigate()
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,10 +31,14 @@ const Forget = () => {
     setCaptcha(generateCaptcha()); // 生成新的驗證碼
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (inputCaptcha === captcha) {
-      console.log({ username, password, rememberMe });
+      let reData = await authService.sendnewpassword(email)
+      alert("已發送新密碼至" + email)
+
+      console.log(reData.data)
+      navigate("/account/login")
       // 在這裡添加登入邏輯
     } else {
       alert("驗證碼錯誤");
@@ -43,16 +50,7 @@ const Forget = () => {
   return (
     <div className="login-container">
       <h1>忘記密碼</h1>
-      <form onSubmit={handleSubmit} className="login-form">
-        <div className="form-group">
-          <label htmlFor="phone">電話號碼</label>
-          <input
-            id="phone"
-            type="text"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-        </div>
+      <form className="login-form">
         <div className="form-group">
 
           <label htmlFor="email">Email</label>
@@ -78,7 +76,7 @@ const Forget = () => {
           />
         </div>
         <div className="form-group">
-          <button type="submit" className="submit-button">送出</button>
+          <button onClick={handleSubmit} className="submit-button">送出</button>
         </div>
       </form>
     </div>

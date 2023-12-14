@@ -1,4 +1,5 @@
 
+import "./Counter.css"
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -13,7 +14,7 @@ import ItemService from './services/ItemService';
 //
 
 
-const MenuComponent = () => {
+const ItemComponent = () => {
   let { id } = useParams();
   const [itemsData, setItemsData] = useState([]);
 
@@ -28,55 +29,14 @@ const MenuComponent = () => {
     });
 
     const fetchData = async () => {
-      let newData = [];
-      let getData = await ComboService.getcombobyID(id);
-      let foundCombo = getData.data.foundcombo
-      console.log({ msg: "this is found combo", foundCombo });
 
 
 
-      let isFirst = true;
-      for (const item of getData.data.foundcombo.items) {
-        let itemData = await ItemService.getItembyID(item.item)
-        let foundItem = itemData.data.foundItem
-
-        console.log({ msg: "this is a foundItem", foundItem })
-        if (isFirst) {
-
-          newData = [...newData, {
-            title: "主餐",
-            name: foundItem.itemname,
-            number: item.itemnumber,
-            isCanChange: foundItem.canChange,
-            image: foundItem.imgpath,
-            group: foundItem.group
-
-          }]
-          isFirst = false
-        }
-        else {
-
-          newData = [...newData, {
-            title: foundItem.title,
-            name: foundItem.itemname,
-            number: item.itemnumber,
-            isCanChange: foundItem.canChange,
-            image: foundItem.imgpath,
-            group: foundItem.group
+      let itemData = await ItemService.getItembyID(id)
+      let foundItem = itemData.data.foundItem
+      setCombo(foundItem)
 
 
-          }]
-        }
-
-        setItemsData(newData);
-        console.log(newData);
-
-
-        console.log({ msg: "itmes data", itemsData })
-
-      }
-
-      setCombo(getData.data.foundcombo)
 
       console.log({ msg: "combo data", comboData })
 
@@ -97,6 +57,16 @@ const MenuComponent = () => {
 
     // ... other menu items
   ];
+  const decrementCount = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
+
+  const incrementCount = () => {
+    setCount(count + 1);
+  };
+
 
   return (
     <div className="foodMenu">
@@ -105,8 +75,14 @@ const MenuComponent = () => {
         {/* You can add more header details here */}
       </div>
       <div className="menuItems">
-        <Menuleft count={count} setCount={setCount} menuItems={itemsData} addPrice={addPrice} setAddPrice={setAddPrice} bonus={bonus} setBonus={setBonus} combo={combo} />
         <Menuright count={count} setCount={setCount} menuItems={itemsData} combo={comboData} addPrice={addPrice} setAddPrice={setAddPrice} bonus={bonus} setBonus={setBonus} />
+
+      </div>
+      <div className="counter">
+        <button onClick={decrementCount}>-</button>
+        <span>{count}</span>
+        <button onClick={incrementCount}>+</button>
+
 
       </div>
       {/* You can add more sections or components here as needed */}
@@ -114,5 +90,6 @@ const MenuComponent = () => {
   );
 };
 
-export default MenuComponent;
+export default ItemComponent;
+
 

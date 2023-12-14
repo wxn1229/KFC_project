@@ -11,6 +11,8 @@ const Navbar = () => {
           <li className="navItem"><Link className="navLink" to="./indivdual">個人餐</Link></li>
           <li className="navItem"><Link className="navLink" to="./share">多人餐</Link></li>
           <li className="navItem"><Link className="navLink" to="./alacert">單點</Link></li>
+
+          <li className="navItem"><Link className="navLink" to="./shoplist">購物車</Link></li>
         </ul>
       </nav>
     </div>

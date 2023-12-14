@@ -26,6 +26,10 @@ class authService {
     })
   }
 
+  sendnewpassword(email) {
+    return axios.post(API_URL + "/sendnewpassword", { email })
+  }
+
 }
 
 

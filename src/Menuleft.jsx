@@ -3,22 +3,62 @@ import React, { useState, useEffect } from 'react';
 import "./Menuleft.css"
 import "./Counter.css"
 import ItemService from './services/ItemService';
+import listService from './services/listService';
+import authService from './services/authService';
 
 
 // A functional component for a menu item
-const MenuItem = ({ title, name, number, isCanChange, image, count, group, changePage, setChangePage, changeGroup, setChangeGroup, list }) => {
+const MenuItem = ({ title, name, number, isCanChange, image, count, group, changePage, setChangePage, changeGroup, setChangeGroup, list, setList, curCount, setCurCount, maxCount, setMaxCount, totalCount, setTotalCount, preList, setPreList, newitemcontent, setNewitemcontent }) => {
   const changeHandler = (event) => {
+    setPreList(list)
+    let tmplist = list
+    tmplist[group] = []
+    setList(tmplist)
+    setTotalCount(0)
+    setMaxCount(number * count)
     setChangePage((!changePage))
     setChangeGroup(group)
 
   }
 
 
-  useEffect(() => {
-    console.log({ msg: "MenuItem group ", group: group })
-    console.log({ msg: "MenuItem list", list: list[group] })
 
-  }, [])
+  useEffect(() => {
+    let itemcontentObj = {
+      ...newitemcontent.reduce((obj, item) => {
+        obj[item.itemname] = { ...item }; // 複製物件以避免直接修改 state
+        return obj;
+      }, {})
+    };
+
+    if (Array.isArray(list[group])) {
+      list[group].forEach((item) => {
+        // 如果 itemcontentObj 已有該 itemname，則更新 itemnum
+        if (itemcontentObj.hasOwnProperty(item.itemname)) {
+          itemcontentObj[item.itemname].itemnum += ((count - curCount) * number);
+        } else {
+          // 如果沒有，則新增該項目
+          itemcontentObj[item.itemname] = {
+            itemname: item.itemname,
+            itemnum: item.num + ((count - curCount) * number)
+          };
+        }
+      });
+    } else {
+      if (itemcontentObj.hasOwnProperty(name)) {
+        itemcontentObj[name].itemnum += ((count - curCount) * number);
+      } else {
+        itemcontentObj[name] = { itemname: name, itemnum: number * count };
+      }
+    }
+
+    let itemcontent = Object.values(itemcontentObj);
+
+    setNewitemcontent(itemcontent);
+    console.log({ msg: "newitemcontent", itemcontent });
+
+  }, [count]);
+
 
 
   return (
@@ -28,21 +68,35 @@ const MenuItem = ({ title, name, number, isCanChange, image, count, group, chang
       <img src={"/img/food/" + image} alt={name} className="menu-item-image" />
       <div className="menu-item-content">
         <div className="menu-item-header">{title}</div>
-        {typeof list[group] == "undefined" && <div className="menu-item-name">{name} x{number * count}</div>
+        {!Array.isArray(list[group]) && <div className="menu-item-name">{name} x{number * count}</div>
         }
-        {!(typeof (list[group]) == 'undefined') && list[group].forEach((item, index) => (
-
-          <div className="menu-item-name listgroup">{item.itemname} x{item.num * count}</div>
-        ))}
-
+        {Array.isArray(list[group]) && list[group].map((item, index) => {
+          if (index === 0) {
+            // Render something special for the first item
+            return <div key={index} className="menu-item-name">{item.itemname} x{item.num + ((count - curCount) * number)} </div>;
+          } else {
+            // Render the standard item for other indices
+            return <div key={index} className="menu-item-name">{item.itemname} x{item.num}</div>;
+          }
+        })}
         {isCanChange && <button group={group} onClick={changeHandler} className="change-button">更換</button>}
       </div>
     </div>
   );
 };
 
-const Menuchange = ({ name, image, changePage, setChangePage, list, setList, changeGroup }) => {
+
+const Menuchange = ({ name, image, price, group, changePage, setChangePage, list, setList, changeGroup, count, totalCount, setTotalCount, maxCount, setMaxCount, curPrice, addPrice, setAddPrice, preList, setPreList }) => {
   const [itemcount, setItemcount] = useState(0)
+  const [preCount, setPreCount] = useState(0)
+  useEffect(() => {
+    setPreCount(itemcount)
+
+
+
+    setTotalCount(totalCount + itemcount - preCount)
+    console.log(preList[group])
+  }, [itemcount])
 
 
 
@@ -67,7 +121,7 @@ const Menuchange = ({ name, image, changePage, setChangePage, list, setList, cha
       if (itemIndex !== -1) {
         // 如果找到相同的 itemname，则替换该项
         updatedGroupItems = groupItems.map((item, index) =>
-          index === itemIndex ? { itemname: name, num: itemcount } : item
+          index === itemIndex ? { itemname: name, num: itemcount, priceDiff: price - curPrice } : item
         );
       } else {
         // 如果没有找到，则添加新项
@@ -83,7 +137,7 @@ const Menuchange = ({ name, image, changePage, setChangePage, list, setList, cha
 
     setList(updatedList);
     console.log(list)
-  }, [changePage, changeGroup, itemcount]);
+  }, [changeGroup, itemcount]);
 
 
 
@@ -94,7 +148,10 @@ const Menuchange = ({ name, image, changePage, setChangePage, list, setList, cha
   };
 
   const incrementCount = () => {
-    setItemcount(itemcount + 1);
+    if (totalCount !== maxCount) {
+
+      setItemcount(itemcount + 1);
+    }
   };
 
 
@@ -104,7 +161,7 @@ const Menuchange = ({ name, image, changePage, setChangePage, list, setList, cha
 
       <img src={"/img/food/" + image} alt={name} className="menu-item-image" />
       <div className="menu-item-content">
-        <div className="menu-item-name">{name}</div>
+        <div className="menu-item-name">{name} {(curPrice - price) !== 0 && `+`}{(curPrice - price) !== 0 && ((-curPrice + price)) + "$"}</div>
         <div className="footer">
           <div className="counter">
             <button onClick={decrementCount}>-</button>
@@ -119,11 +176,19 @@ const Menuchange = ({ name, image, changePage, setChangePage, list, setList, cha
   );
 };
 // The Menu component that would render all the menu items
-const Menuleft = ({ count, setCount, menuItems }) => {
+const Menuleft = ({ count, setCount, menuItems, addPrice, setAddPrice, bonus, setBonus, combo }) => {
   const [changePage, setChangePage] = useState(false)
   const [changeGroup, setChangeGroup] = useState('ff')
   const [groups, setGroups] = useState({})
   const [list, setList] = useState({})
+  const [preList, setPreList] = useState({})
+
+  const [curCount, setCurCount] = useState(1)
+  const [totalCount, setTotalCount] = useState(0)
+  const [maxCount, setMaxCount] = useState(0)
+  const [curPrice, setCurPrice] = useState(0)
+  const [newitemcontent, setNewitemcontent] = useState([])
+
 
 
   useEffect(() => {
@@ -134,6 +199,7 @@ const Menuleft = ({ count, setCount, menuItems }) => {
 
 
         setGroups(foundGroups.data.foundItems)
+        setCurPrice(foundGroups.data.foundItems[0].price)
       } catch (e) {
         console.log({ msg: "found Groups error", error: e })
 
@@ -145,12 +211,67 @@ const Menuleft = ({ count, setCount, menuItems }) => {
 
   }, [changeGroup])
 
+  const addHandler = () => {
+
+    console.log("click join")
+    for (const key in list) {
+      if (list.hasOwnProperty(key)) {
+        const items = list[key];
+        if (Array.isArray(items)) {
+          items.forEach(item => {
+            console.log({ msg: "check item", item });
+            console.log({ msg: "check item.priceDiff * num", result: item.priceDiff * item.num });
+          });
+        }
+      }
+    }
+    try {
+
+      // let newitem = { title: combo.comboname, itemprice: combo.price * count + bonus, }
+      //let updatelist = await listService.addproduct(authService.getCurUser()._id,)
+
+    } catch (e) {
+      console.log(e.response.data)
+
+    }
+
+  }
   //console.log({ msg: "this is left items", object: menuItems })
   const checkHandler = () => {
+    console.log({ msg: "this is list", list })
 
 
-    setChangePage((!changePage))
-    console.log(changePage)
+
+    if (totalCount === maxCount) {
+      let totalBonus = bonus; // Start with the current bonus
+
+      for (const key in list) {
+        if (list.hasOwnProperty(key)) {
+          const items = list[key];
+          if (Array.isArray(items)) {
+            items.forEach(item => {
+              console.log({ msg: "check item", item });
+              console.log({ msg: "check item.priceDiff * num", result: item.priceDiff * item.num });
+
+              totalBonus += (item.num * (item.priceDiff || 0)); // Safely add to totalBonus
+
+              console.log({ msg: "check running totalBonus", result: totalBonus });
+            });
+          }
+        }
+      }
+
+
+      setBonus(totalBonus); // Update the state only once
+      console.log({ msg: "final totalBonus", result: totalBonus });
+      setCurCount(count);
+      setChangePage(!changePage);
+      console.log(changePage);
+    }
+    else if (totalCount < maxCount) {
+      alert("目前只選擇了" + totalCount + "項,請再選擇" + (maxCount - totalCount) + "項,總共需要" + maxCount + "項品項")
+    }
+
   }
 
 
@@ -181,6 +302,17 @@ const Menuleft = ({ count, setCount, menuItems }) => {
           changeGroup={changeGroup}
           setChangeGroup={setChangeGroup}
           list={list}
+          setList={setList}
+          curCount={curCount}
+          setCurCount={setCurCount}
+          maxCount={maxCount}
+          setMaxCount={setMaxCount}
+          totalCount={totalCount}
+          setTotalCount={setTotalCount}
+          preList={preList}
+          setPreList={setPreList}
+          newitemcontent={newitemcontent}
+          setNewitemcontent={setNewitemcontent}
 
         />
       ))}
@@ -193,7 +325,7 @@ const Menuleft = ({ count, setCount, menuItems }) => {
             <button onClick={incrementCount}>+</button>
           </div>
           <div className="addcartblock">
-            <button className="add-to-cart-button">加入購物車</button>
+            <button onClick={addHandler} className="add-to-cart-button">加入購物車</button>
           </div>
 
 
@@ -207,15 +339,32 @@ const Menuleft = ({ count, setCount, menuItems }) => {
           key={index}
           name={item.itemname}
           image={item.imgpath}
+          price={item.price}
+          group={item.group}
           changePage={changePage}
           setChangePage={setChangePage}
           list={list}
           setList={setList}
           changeGroup={changeGroup}
+          count={count}
+          totalCount={totalCount}
+          setTotalCount={setTotalCount}
+          maxCount={maxCount}
+          setMaxCount={setMaxCount}
+          curPrice={curPrice}
+          addPrice={addPrice}
+          setAddPrice={setAddPrice}
+          preList={preList}
+          setPreList={setPreList}
+
+
+
 
 
         />
       ))}
+      {changePage && <h3>總共需要 {maxCount} 個品項</h3>}
+
       {changePage &&
         <div className="addcartblock">
           <button onClick={checkHandler} className="add-to-cart-button">確認</button>

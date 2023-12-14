@@ -1,4 +1,4 @@
-import ProductCard from "./ProductCard";
+import ProductCard from "./ProductCardal";
 import "./Indivdual.css"
 import React, { useEffect, useState } from "react";
 import ComboService from "./services/comboService";
@@ -48,6 +48,8 @@ const Alacert = () => {
                 title={product.itemname}
                 price={product.price}
                 imgpath={product.imgpath}
+                _id={product._id}
+
               />
             ))}
           </div>

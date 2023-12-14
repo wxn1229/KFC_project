@@ -18,7 +18,7 @@ const ProductCard = ({ title, items, price, imgpath, _id }) => {
           ))}
         </ul>
         <div className="product-price">${price}</div>
-        <button className="btn-order"><Link className='cardLink' to={"../menu/combo/" + _id}>訂購</Link></button>
+        <button className="btn-order"><Link to={"../menu/item/" + _id}>訂購</Link></button>
       </div>
     </div>
   );

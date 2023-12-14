@@ -1,0 +1,81 @@
+/* order.css */
+
+
+.rectangle-box {
+  width: 700px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #FFA07A; /* Light Salmon color for the border */
+  border-radius: 8px;
+  background: #fff;
+}
+
+.orderplace {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.orderplace button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #FF4500; /* Orange Red color for the button */
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.orderplace button:hover {
+  background-color: #FF6347; /* Tomato color for button hover */
+}
+
+select, input[type="date"], input[type="time"], input[type="text"] {
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #FFA07A; /* Light Salmon color for inputs */
+  border-radius: 5px;
+  width: calc(100% - 22px); /* Adjust width to account for padding and border */
+}
+
+.restaurant-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Spacing between cards */
+}
+
+.restaurant-card {
+  flex: 0 1 calc(50% - 10px); /* Each card takes up half the container width minus the gap */
+  border: 1px solid #FF7F50; /* Coral color for cards */
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.restaurant-card.selected {
+  background-color: #FFE4B5; /* Moccasin color for selected cards */
+  border-color: #FF4500; /* Orange Red color for border */
+}
+
+.confirm-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #DC143C; /* Crimson color for the confirm button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.confirm-button:hover {
+  background-color: #B22222; /* FireBrick color for confirm button hover */
+}
+
+h2 {
+  margin-top: 20px;
+}
+
